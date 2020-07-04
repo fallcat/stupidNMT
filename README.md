@@ -180,7 +180,8 @@ configure the experiment tracking to suit your needs.
 
 ## Cite
 
-```@inproceedings{you-etal-2020-hard,
+```
+@inproceedings{you-etal-2020-hard,
     title = "Hard-Coded {G}aussian Attention for Neural Machine Translation",
     author = "You, Weiqiu  and
       Sun, Simeng  and
