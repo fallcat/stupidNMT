@@ -38,7 +38,7 @@ pass}`.
 Preprocessing for wmt_en_de, wmt_en_fr and iwslt_en_de are the same as in synst:
 
 ```sh
-python main.py --dataset wmt_en_de -d raw/wmt -p preprocessed/wmt -v pass
+python main.py --dataset wmt_en_de -d data/raw/wmt -p data/preprocessed/wmt -v pass
 ```
 
 We also added IWSLT En-Ja and WMT En-Ro datasets and you can process them by the following commands.
@@ -59,16 +59,16 @@ Then, we can download data for each dataset and process them by the following co
 En-Ja:
 
 ```sh
-mkdir /data/en_ja_tmp
-mkdir /data/en_ja
-RAW_PATH=/data/en_ja_tmp PROCESS_PATH=/data/en_ja bash process_new_data/process_enja.sh
+mkdir data/raw/enja
+mkdir data/processed/enja
+RAW_PATH=data/raw/enja PROCESS_PATH=data/processed/enja bash process_new_data/process_enja.sh
 ```
 
 En-Ro:
 ```sh
-mkdir /data/en_ro_tmp
-mkdir /data/en_ro
-RAW_PATH=/data/en_ja_tmp PROCESS_PATH=/data/en_ro bash process_new_data/process_enro.sh
+mkdir data/raw/enro
+mkdir data/processed/enro
+RAW_PATH=data/raw/enro PROCESS_PATH=data/processed/enro bash process_new_data/process_enro.sh
 ```
 
 Please note that our preprocessing of En-Ja is not the standard way for IWSLT En-Ja dataset, so the results might be different from other works.
@@ -82,7 +82,7 @@ python main.py -b 3175 --dataset wmt_en_de \
   --model new_transformer \
   --enc-attn-type normal --enc-attn-offset -1 1 \
   --dec-attn-type normal --dec-attn-offset -1 0 \
-  -d raw/wmt -p preprocessed/wmt -v train \
+  -d data/raw/wmt -p data/preprocessed/wmt -v train \
   --checkpoint-interval 1200 --accumulate 2 \
   --checkpoint-directory experiments/wmt_en_de_01
 ```
@@ -100,7 +100,7 @@ python main.py -b 6000 --dataset iwslt_en_de \
   --dec-attn-type normal --dec-attn-offset -1 0 \
   --enc-dec-attn-type normal --enc-dec-attn-offset -1 1 \
   --embedding-size 288 --hidden-dim 507 --num-heads 4 --num-layers 5 \
-  -d raw/wmt -p preprocessed/wmt -v train \
+  -d data/raw/wmt -p data/preprocessed/wmt -v train \
   --checkpoint-interval 600 --accumulate 1 \
   --checkpoint-directory experiments/iwslt_en_de_01 \
   --label-smoothing 0.0 --learning-rate-scheduler linear --learning-rate 3e-4
@@ -116,7 +116,7 @@ python main.py -b 6000 --dataset iwslt_en_de \
   --enc-dec-attn-type learned \
   --enc-dec-attn-layer 0 0 0 0 1 --enc-dec-attn-num-heads 0 0 0 0 1 \
   --embedding-size 288 --hidden-dim 507 --num-heads 4 --num-layers 5 \
-  -d raw/wmt -p preprocessed/wmt -v train \
+  -d data/raw/wmt -p data/preprocessed/wmt -v train \
   --checkpoint-interval 600 --accumulate 1 \
   --checkpoint-directory experiments/iwslt_en_de_01 \
   --label-smoothing 0.0 --learning-rate-scheduler linear --learning-rate 3e-4
@@ -126,7 +126,7 @@ The default model is the Transformer model. If you want to train a vanilla Tranf
 
 ```sh
 python main.py -b 3175 --dataset wmt_de_en \
-  -d raw/wmt -p preprocessed/wmt -v train \
+  -d data/raw/wmt -p data/preprocessed/wmt -v train \
   --checkpoint-interval 1200 --accumulate 2
 ```
 
@@ -138,7 +138,7 @@ cuda as done below):
 
 ```sh
 python main.py -b 5000 --dataset wmt_en_de \
-  --model new_transformer -d raw/wmt -p preprocessed/wmt \
+  --model new_transformer -d data/raw/wmt -p data/preprocessed/wmt \
   --enc-attn-type normal --enc-attn-offset -1 1 \
   --dec-attn-type normal --dec-attn-offset -1 0 \
   --split valid --disable-cuda -v evaluate \
@@ -155,7 +155,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py --dataset wmt_en_de \
   --model new_transformer \
   --enc-attn-type normal --enc-attn-offset -1 1 \
   --dec-attn-type normal --dec-attn-offset -1 0 \
-  -d raw/wmt -p preprocessed/wmt \
+  -d data/raw/wmt -p data/preprocessed/wmt \
   --batch-size 1 --batch-method example --split test \
   --restore /tmp/stupidnmt/checkpoints/checkpoint.pt \
   --average-checkpoints 5 translate \
